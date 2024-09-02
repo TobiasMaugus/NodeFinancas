@@ -1,25 +1,22 @@
 const express = require("express");
+const {v4: uuidv4} = require("uuid");
 
 const app = express();
+app.use(express.json());
 
-app.get("/fin", (request, response) =>{
-    return response.json({message: "Hello!"});
+const customers = [];
+
+app.post("/account", (request, response) =>{
+    const {cpf, name} = request.body;
+    const id = uuidv4();
+    customers.push({
+        cpf,
+        name,
+        id,
+        statement: [] 
+    });
+    return response.status(201).send();
 });
 
-app.post("/fin", (request, response) =>{
-    return response.json({message: "Hello!"});
-});
-
-app.put("/fin/:id", (request, response) =>{
-    return response.json({message: "Hello!"});
-});
-
-app.patch("/fin/:id", (request, response) =>{
-    return response.json({message: "Hello!"});
-});
-
-app.delete("/fin/:id", (request, response) =>{
-    return response.json({message: "Hello!"});
-});
 
 app.listen(3333)
